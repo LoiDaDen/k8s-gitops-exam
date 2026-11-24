@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kubernetes & GitOps Exam</title>
+<style>
+*{box-sizing:border-box}
+body{background:#0b1220;color:#f1f5f9;font-family:Arial;margin:0}
+main{max-width:900px;margin:60px auto;padding:24px}
+h1{font-size:38px}
+p{color:#94a3b8;line-height:1.6}
+.tag{color:#60a5fa;letter-spacing:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin:30px 0}
+.card{background:#172235;padding:24px;border:1px solid #334155;border-radius:12px}
+strong{display:block;font-size:25px;margin-top:12px}
+button{background:#2563eb;color:white;border:0;border-radius:8px;padding:13px 22px;cursor:pointer}
+#result{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<main>
+<p class="tag">GIAI DOAN 2 - FULLSTACK</p>
+<h1>Kubernetes & GitOps</h1>
+<p>Mini Web Application Deployment</p>
+<div class="grid">
+<div class="card">Initial Replicas<strong>02</strong></div>
+<div class="card">Container Port<strong>80</strong></div>
+<div class="card">Service Type<strong>ClusterIP</strong></div>
+<div class="card">Namespace<strong>exam-web</strong></div>
+</div>
+<section class="card">
+<h2>Thông tin học viên</h2>
+<p>Họ tên: Huynh Lợi</p>
+<p>Lớp: K6 Buổi Tối</p>
+<p>Docker | Kubernetes | Nginx | ArgoCD</p>
+<button onclick="checkHealth()">Kiểm tra ứng dụng</button>
+<p id="result">Chưa kiểm tra</p>
+</section>
+<p>exam.loiden.io.vn | Version 1.0.0</p>
+</main>
+<script>
+async function checkHealth(){
+ const result=document.getElementById('result');
+ try{
+  const response=await fetch('/healthz',{cache:'no-store'});
+  if(!response.ok)throw new Error('HTTP '+response.status);
+  result.textContent='Healthy | Pod: '+
+   (response.headers.get('X-Pod-Name')||'Unknown')+
+   ' | HTTP '+response.status;
+  result.style.color='#4ade80';
+ }catch(error){
+  result.textContent='Error: '+error.message;
+  result.style.color='#f87171';
+ }
+}
+</script>
+</body>
+</html>

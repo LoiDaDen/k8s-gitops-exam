@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mini-web-exam
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/LoiDaDen/k8s-gitops-exam.git
+    targetRevision: main
+    path: .
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: exam-web
+
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mini-web-ingress
+  namespace: exam-web
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: exam.loiden.io.vn
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mini-web-service
+                port:
+                  number: 80
